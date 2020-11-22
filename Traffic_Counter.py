@@ -32,7 +32,7 @@ def set_info(detect):
 def show_info(frame1, dilated):
     text = f'Cars: {cars}'
     cv2.putText(frame1, text, (450, 70), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 5)
-    cv2.imshow("Video Original", frame1)
+    cv2.imshow("Motorway camera", frame1)
     cv2.imshow("toDetect", dilated)
 
 
