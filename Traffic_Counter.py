@@ -10,7 +10,7 @@ def takes_center(x, y, width, height):
     :param y: y object
     :param width: width object
     :param height: height object
-    :return: tuple that contains the coordinates of the center of an object
+    :return: that contains the coordinates of the center of an object
     """
     x1 = width // 2
     y1 = height // 2
