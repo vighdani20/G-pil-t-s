@@ -42,7 +42,7 @@ Itt pedig informaljuk a kulso szemlelot, elnevezzuk, feliratozunk
 """
 cars = caminhoes = 0
 cap = cv2.VideoCapture('video.mp4')
-subtraction = cv2.bgsegm.createBackgroundSubtractorMOG()  # Take the bottom and subtract from what is moving
+subtraction = cv2.bgsegm.createBackgroundSubtractorMOG()  
 
 """
 CAP= halmozott pontossagi profil // video.mp4 fajlt hasznaljuk, aminek egy mappaban
@@ -50,22 +50,20 @@ kell lennie az main, és a contanssal
 """
 
 while True:
-    ret, frame1 = cap.read()  # Take each frame of the video // Keszitsuk el a video kepkockait
+    ret, frame1 = cap.read()  # Keszitsuk el a video kepkockait
     tempo = float(1 / delay) #ezert kellett a time, hogy alkalmazhassunk delayt
-    sleep(tempo)  # Delays between each processing // Kesleltetjuk a feldolgozast
-    grey = cv2.cvtColor(frame1, cv2.COLOR_BGR2GRAY)  # Take the frame and transform it to black and white
-    #fekete-feherre alakitsuk a keretet
-    blur = cv2.GaussianBlur(grey, (3, 3), 5)  # Blur to try to remove imperfections from the image
-    #A kep hibait el kell tavolitani, mivel a video csak mp4 tipusu
-    img_sub = subtraction.apply(blur)  # Subtracts the image applied in the blur
-    #homalyt kivonjuk a keprol
-    dilat = cv2.dilate(img_sub, np.ones((5, 5)))  # "Thicken" what's left of the subtraction
-    #suritjuk ami maradt a kivonasbol
+    sleep(tempo)  # Kesleltetjuk a feldolgozast
+    grey = cv2.cvtColor(frame1, cv2.COLOR_BGR2GRAY)  #fekete-feherre alakitsuk a keretet
+    blur = cv2.GaussianBlur(grey, (3, 3), 5)  #A kep hibait el kell tavolitani, mivel a video csak mp4 tipusu
+    
+    img_sub = subtraction.apply(blur)  #homalyt kivonjuk a keprol
+    
+    dilat = cv2.dilate(img_sub, np.ones((5, 5)))  #suritjuk ami maradt a kivonasbol
     kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (
-        5, 5))  # Creates a 5x5 matrix, where the matrix format between 0 and 1 forms an ellipse inside
-    #Letrehozunk egy 5x5 matrixot, es a matrixot 0,1 kozotti resznel ellipszist keszitunk
-    dilated = cv2.morphologyEx(dilat, cv2.MORPH_CLOSE, kernel)  # Try to fill all the "holes" in the image
-    #kepjavitas, itt igazabol a pixelhibakat kuszboljuk a morph segitsegevel, automata kitoltes
+        5, 5))  #Letrehozunk egy 5x5 matrixot, es a matrixot 0,1 kozotti resznel ellipszist keszitunk
+    
+    dilated = cv2.morphologyEx(dilat, cv2.MORPH_CLOSE, kernel)  #kepjavitas, itt igazabol a pixelhibakat kuszboljuk a morph segitsegevel, automata kitoltes
+    
     dilated = cv2.morphologyEx(dilated, cv2.MORPH_CLOSE, kernel)
 
     contour, img = cv2.findContours(dilated, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
