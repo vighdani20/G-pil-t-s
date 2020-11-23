@@ -40,7 +40,7 @@ def show_info(frame1, dilated):
 """
 Itt pedig informaljuk a kulso szemlelot, elnevezzuk, feliratozunk
 """
-cars = caminhoes = 0
+cars = 0
 cap = cv2.VideoCapture('video.mp4')
 subtraction = cv2.bgsegm.createBackgroundSubtractorMOG()  
 
